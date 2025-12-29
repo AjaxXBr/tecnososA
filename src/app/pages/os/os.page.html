@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Ordens de Serviço</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="novaOS()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-segment [value]="segmentoAtivo" (ionChange)="mudarSegmento($event)">
+    <ion-segment-button value="aguardando">
+      <ion-label>Aguardando</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="em_reparo">
+      <ion-label>Em Reparo</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pronto">
+      <ion-label>Pronto</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list>
+    <ion-item *ngFor="let os of ordensFiltradas">
+      <ion-avatar slot="start">
+        <ion-icon [name]="getIconeStatus(os.status)" [color]="getCorStatus(os.status)"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ os.numero }} - {{ os.equipamentoNome }}</h2>
+        <p>{{ os.defeitoRelatado }}</p>
+        <p>Cliente: {{ os.clienteNome }}</p>
+        <p>Data: {{ os.dataAbertura |  date:'dd/MM/yyyy' }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="success" (click)="avancarStatus(os)"
+          *ngIf="os.status !== 'pronto' && os.status !== 'cancelado'">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="warning" (click)="editarOS(os)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="excluirOS(os)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="carregando" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Carregando ordens de serviço...</p>
+  </div>
+
+  <div *ngIf="ordensFiltradas.length === 0 && !carregando" class="ion-text-center ion-padding">
+    <p>Nenhuma ordem de serviço {{ getTextoStatus() }}</p>
+    <ion-button (click)="novaOS()">Criar Primeira OS</ion-button>
+  </div>
+
+  <app-os-form *ngIf="mostrarFormulario" [os]="osEditando" (salvo)="onOSSalva()" (cancelado)="onOSCancelada()">
+  </app-os-form>
+</ion-content>

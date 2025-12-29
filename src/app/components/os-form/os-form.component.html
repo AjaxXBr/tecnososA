@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ editando ? 'Editar OS' : 'Nova OS' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()" [disabled]="carregando">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Equipamento *</ion-label>
+      <ion-select placeholder="Selecione o equipamento" [(ngModel)]="form.equipamentoId" [disabled]="carregando">
+        <ion-select-option *ngFor="let equipamento of equipamentos" [value]="equipamento.id">
+          {{ equipamento.nome }} - {{ equipamento.clienteNome }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Defeito Relatado *</ion-label>
+      <ion-textarea placeholder="Descreva o defeito relatado pelo cliente" rows="3" [(ngModel)]="form.defeitoRelatado"
+        [disabled]="carregando">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Observações Técnicas</ion-label>
+      <ion-textarea placeholder="Descreva as observações técnicas" rows="3" [(ngModel)]="form.observacoesTecnicas"
+        [disabled]="carregando">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Status</ion-label>
+      <ion-select [(ngModel)]="form.status" [disabled]="carregando">
+        <ion-select-option *ngFor="let status of statusOptions" [value]="status.value">
+          {{ status.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Prioridade</ion-label>
+      <ion-select [(ngModel)]="form.prioridade" [disabled]="carregando">
+        <ion-select-option *ngFor="let prioridade of prioridadeOptions" [value]="prioridade.value">
+          {{ prioridade.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="salvar()" [disabled]="carregando">
+      <ion-spinner *ngIf="carregando" slot="start"></ion-spinner>
+      {{ editando ? 'Atualizar' : 'Criar' }} OS
+    </ion-button>
+  </div>
+</ion-content>

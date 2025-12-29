@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Clientes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="novoCliente()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let cliente of clientes">
+      <ion-avatar slot="start">
+        <ion-icon name="person" color="medium"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ cliente.nome }}</h2>
+        <p>{{ cliente.telefone }} - {{ cliente.email }}</p>
+        <p>{{ cliente.endereco }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="primary" (click)="visualizarCliente(cliente)">
+          <ion-icon slot="icon-only" name="eye"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="warning" (click)="editarCliente(cliente)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="excluirCliente(cliente)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="carregando" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Carregando clientes...</p>
+  </div>
+
+  <div *ngIf="clientes.length === 0 && !carregando" class="ion-text-center ion-padding">
+    <p>Nenhum cliente cadastrado</p>
+    <ion-button (click)="novoCliente()">Cadastrar Primeiro Cliente</ion-button>
+  </div>
+
+  <app-cliente-form *ngIf="mostrarFormulario" [cliente]="clienteEditando" (salvo)="onClienteSalvo()"
+    (cancelado)="onClienteCancelado()">
+  </app-cliente-form>
+
+  <app-cliente-detalhes *ngIf="mostrarDetalhes && clienteSelecionado" [cliente]="clienteSelecionado"
+    (voltar)="onVoltarDetalhes()" (editar)="onEditarDetalhes($event)">
+  </app-cliente-detalhes>
+</ion-content>

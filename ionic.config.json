@@ -1,0 +1,7 @@
+{
+  "name": "tecnosos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

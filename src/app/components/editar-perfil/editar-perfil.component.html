@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()" [disabled]="carregando">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nome *</ion-label>
+      <ion-input type="text" [(ngModel)]="form.nome" [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Email *</ion-label>
+      <ion-input type="email" [(ngModel)]="form.email" [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Telefone</ion-label>
+      <ion-input type="tel" [(ngModel)]="form.telefone" [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cargo</ion-label>
+      <ion-input type="text" [(ngModel)]="form.cargo" [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Especialidade</ion-label>
+      <ion-input type="text" [(ngModel)]="form.especialidade" [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Nova Senha</ion-label>
+      <ion-input type="password" placeholder="Deixe em branco para manter a atual" [(ngModel)]="form.senha"
+        [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Confirmar Senha</ion-label>
+      <ion-input type="password" placeholder="Confirme a nova senha" [(ngModel)]="form.confirmarSenha"
+        [disabled]="carregando">
+      </ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="salvar()" [disabled]="carregando">
+      <ion-spinner *ngIf="carregando" slot="start"></ion-spinner>
+      Salvar Alterações
+    </ion-button>
+  </div>
+</ion-content>

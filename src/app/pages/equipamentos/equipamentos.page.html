@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Equipamentos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="novoEquipamento()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let equipamento of equipamentos">
+      <ion-avatar slot="start">
+        <ion-icon name="hardware-chip" color="medium"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ equipamento.nome }}</h2>
+        <p>{{ equipamento.marca }} {{ equipamento.modelo }}</p>
+        <p>Cliente: {{ equipamento.clienteNome }}</p>
+        <p>N/S: {{ equipamento.numeroSerie }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="warning" (click)="editarEquipamento(equipamento)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="excluirEquipamento(equipamento)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="carregando" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Carregando equipamentos...</p>
+  </div>
+
+  <div *ngIf="equipamentos.length === 0 && !carregando" class="ion-text-center ion-padding">
+    <p>Nenhum equipamento cadastrado</p>
+    <ion-button (click)="novoEquipamento()">Cadastrar Primeiro Equipamento</ion-button>
+  </div>
+
+  <app-equipamento-form *ngIf="mostrarFormulario" [equipamento]="equipamentoEditando" (salvo)="onEquipamentoSalvo()"
+    (cancelado)="onEquipamentoCancelado()">
+  </app-equipamento-form>
+</ion-content>
