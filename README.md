@@ -30,7 +30,8 @@ Ionic
 
 Firebase 
 
-Node.js (ambiente de desenvolvimento)
+TypeScript
+
 
 🧩 Funcionamento Geral
 
